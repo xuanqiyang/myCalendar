@@ -1,7 +1,7 @@
 var Calendar = function(ele) {
     var eleCalendar = document.querySelector(ele);
-    var date = new Date();
     var Now = function() {
+        var date = new Date();
         this.dayOnWeek = date.getDay(), //获取当日星期
         this.month = date.getMonth() + 1, //获取当日月份
         this.dayOnMonth = date.getDate(), //获取当日月份
@@ -10,13 +10,17 @@ var Calendar = function(ele) {
     };
 
     var _now = new Now();
-    var firstDayOfMonthOfWeek = new Date(_now.year, _now.month - 1, 1).getDay(); //这个月第一天是星期几
-
+    var weekIsfirstDayOfMonth = new Date(_now.year, _now.month - 1, 1).getDay(); //这个月第一天是星期几
+    var IndexOflastday = weekIsfirstDayOfMonth + _now.daysOnThisMonth //这个月最后一天的在日历表格中的索引
     var renderCalendar = function() {
         var fragCalendar = document.createDocumentFragment();
         var eleWeekdays = document.createElement('ul');
         var eleMonthdays = document.createElement('ul');
-        var indexofDayOfMonth = firstDayOfMonthOfWeek;
+        var indexofDayOfMonth = weekIsfirstDayOfMonth;
+        var day = 1;
+        var dayOfNextMonth=1;
+        var dayOfPreMonth = new Date(_now.year, _now.month-2, 0).getDate() //获取上个月的天数
+
         eleWeekdays.className = 'weekdays';
         eleMonthdays.className = 'monthdays';
 
@@ -40,17 +44,19 @@ var Calendar = function(ele) {
         eleCalendar.appendChild(fragCalendar);
 
         var elMonthdays= eleCalendar.querySelector('.monthdays');
+        console.log(elMonthdays.children.length)
         // 填充日历中的天数
-        var day = 1
-        for(var liNumOfDays = 0, day=1; elMonthdays.children.length > liNumOfDays; liNumOfDays++){
-            if(liNumOfDays >= firstDayOfMonthOfWeek && day <= _now.daysOnThisMonth){ //如果填充的目标li在某一个月之内
+        for(var liNumOfDays = 0; elMonthdays.children.length >= liNumOfDays; liNumOfDays++){
+            if(liNumOfDays >= weekIsfirstDayOfMonth && day <= _now.daysOnThisMonth){ //如果填充的格子在某一个月之内
                 eleMonthdays.children[liNumOfDays].innerText = day++;
-            }else{
-
+            }else if(liNumOfDays >= IndexOflastday && day <= elMonthdays.children.length){ //如果这个月的天数没有填满日历表格,填充下个月的格子
+                eleMonthdays.children[liNumOfDays].innerText = dayOfNextMonth++;
+            }else if(liNumOfDays < weekIsfirstDayOfMonth) {
+                eleMonthdays.children[liNumOfDays].innerText=dayOfPreMonth--;
             }
         }
-    }()
-    for (var i = firstDayOfMonthOfWeek; i <= _now.daysOnThisMonth; i++) {
+    }();
+    for (var i = weekIsfirstDayOfMonth; i <= _now.daysOnThisMonth; i++) {
 
     }
     console.log(_now.daysOnThisMonth);
