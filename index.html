@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
     table {
         border: 1px solid #eee;
     }
@@ -12,7 +16,7 @@
     .weekdays {
         overflow: hidden;
         width: 400px;
-        height: 20px;
+        height: 30px;
     }
 
     .weekdays li {
@@ -36,6 +40,17 @@
         height: 50px;
         border: 1px solid #eee;
     }
+    .head-calendar{
+                width: 400px;
+        height: 20px;
+        text-align: center;
+    }
+    .head-calendar #date{
+        margin: 0 10px;
+    }
+    .head-calendar span{
+        cursor: pointer;
+    }
     </style>
 </head>
 
@@ -44,7 +59,7 @@
     </div>
     <script src="./js/calendar.js"></script>
     <script type="text/javascript">
-    console.log(new Calendar(document.querySelector('#calendar')))
+    console.log(new Calendar(document.querySelector('#calendar'), 2017, 3, 4))
     </script>
 </body>
 
