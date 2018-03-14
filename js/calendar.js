@@ -20,9 +20,9 @@ var Calendar = function(eleCalendar, yearArg, monthArg, dateArg) {
                 month = date.getMonth(); //获取当日月份
                 dayOfMonth = date.getDate(); //获取当月日期
                 year = date.getFullYear(); //获取当日年份
-                daysInThisMonth = new Date(__self.year, __self.month + 1, 0).getDate(); //获取当月总天数
-                weekIsfirstDayOfMonth = new Date(__self.year, __self.month, 1).getDay(); //这个月第一天是星期几
-                IndexOflastday = __self.weekIsfirstDayOfMonth + __self.daysInThisMonth - 1; //这个月最后一天的在日历表格中的索引
+                daysInThisMonth = new Date(year, month + 1, 0).getDate(); //获取当月总天数
+                weekIsfirstDayOfMonth = new Date(year, month, 1).getDay(); //这个月第一天是星期几
+                IndexOflastday = weekIsfirstDayOfMonth + daysInThisMonth - 1; //这个月最后一天的在日历表格中的索引
             }
         };
         this.subMonth = function() {
